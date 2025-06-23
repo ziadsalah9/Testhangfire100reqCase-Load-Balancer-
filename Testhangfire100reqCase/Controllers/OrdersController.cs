@@ -12,9 +12,10 @@ namespace Testhangfire100reqCase.Controllers
         private readonly OrderQueue _orderQueue;
         private readonly ReadOrderQueue _readQueue;
 
-        public OrdersController(OrderQueue orderQueue)
+        public OrdersController(OrderQueue orderQueue  , ReadOrderQueue readQueue)
         {
             _orderQueue = orderQueue;
+            _readQueue = readQueue;
         }
 
         [HttpPost]

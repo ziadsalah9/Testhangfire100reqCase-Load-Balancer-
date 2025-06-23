@@ -21,6 +21,8 @@ namespace Testhangfire100reqCase
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddSingleton<OrderQueue>();
             builder.Services.AddHostedService<OrderProcessor>();
+
+            builder.Services.AddSingleton<ReadOrderQueue>();
             builder.Services.AddHostedService<ReadOrderWorker>();
 
 

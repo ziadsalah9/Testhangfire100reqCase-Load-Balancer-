@@ -8,7 +8,6 @@ namespace Testhangfire100reqCase.Background_Services
     {
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly OrderQueue _orderQueue;
-        private readonly StoreDbcontext dbcontext; 
         public OrderProcessor(IServiceScopeFactory scopeFactory, OrderQueue queue)
         {
             _scopeFactory = scopeFactory;
@@ -22,8 +21,8 @@ namespace Testhangfire100reqCase.Background_Services
             {
                 while (_orderQueue.Queue.TryDequeue(out var customerName))
                 {
-                   // using var scope = _scopeFactory.CreateScope();
-                  //  var dbContext = scope.ServiceProvider.GetRequiredService<StoreDbcontext>();
+                    using var scope = _scopeFactory.CreateScope();
+                    var dbContext = scope.ServiceProvider.GetRequiredService<StoreDbcontext>();
 
                     var order = new Orders
                     {
@@ -34,8 +33,8 @@ namespace Testhangfire100reqCase.Background_Services
 
                     Console.WriteLine($" معالجة: {customerName} - {DateTime.Now}");
 
-                    dbcontext.Orders.Add(order);
-                    await dbcontext.SaveChangesAsync();
+                    dbContext.Orders.Add(order);
+                    await dbContext.SaveChangesAsync();
                 }
 
 
